@@ -5,6 +5,15 @@ Con los siguientes códigos vamos a calcular el espectro de masa de esta partíc
 
 # Minuit
 Minuit es una herramienta computacional en formato de módulo para Python 3, originalmente escrita en FORTRAN, que se utiliza para encontrar el mínimo de funciones multivariables y hacer análisis de la forma de la función alrededor de este punto, está intencionada para el análisis estadístico y cálculo de valores de parámetros.
+<code> 
+from iminuit import Minuit
+m = Minuit(fcn, ns=6000., nb=14000., mean=3.09, sigma=0.04, c1=0.)
+m.migrad() #Se busca el mínimo
+m.minos() #Calculamos errores asimétricos
+m.print_param() #Imprimimos el resumen de parámetros
+</code>
+  
+
 
 # Mínimos cuadrados
 Este método es el más sencillo de los utilizados pero también es el más impreciso, con este método obtenemos un resultado que expresa que tanta diferencia existe entre los resultados esperados y los obtenidos.
