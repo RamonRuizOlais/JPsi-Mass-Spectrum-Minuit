@@ -11,7 +11,7 @@ Minuit es una herramienta computacional en formato de módulo para Python 3, ori
  m.migrad() #Se busca el mínimo
  m.minos() #Calculamos errores asimétricos
  m.print_param() #Imprimimos el resumen de parámetros
-<pre></code>
+</code></pre>
   
 
 
