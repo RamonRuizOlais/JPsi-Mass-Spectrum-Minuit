@@ -4,6 +4,11 @@ La partícula J/Psi es un mesón de sabor neutro que consta de un quark encanto 
 Con los siguientes códigos vamos a calcular el espectro de masa de esta partícula a través de tres métodos estadísticos y el módulo Minuit.
 
 # Minuit
+Puede ser instalado a través de pip
+<pre><code>
+pip install iminuit
+<\code><\pre>
+
 Minuit es una herramienta computacional en formato de módulo para Python 3, originalmente escrita en FORTRAN, que se utiliza para encontrar el mínimo de funciones multivariables y hacer análisis de la forma de la función alrededor de este punto, está intencionada para el análisis estadístico y cálculo de valores de parámetros.
 <pre><code> 
  from iminuit import Minuit
@@ -14,6 +19,3 @@ Minuit es una herramienta computacional en formato de módulo para Python 3, ori
 </code></pre>
   
 
-
-# Mínimos cuadrados
-Este método es el más sencillo de los utilizados pero también es el más impreciso, con este método obtenemos un resultado que expresa que tanta diferencia existe entre los resultados esperados y los obtenidos.
