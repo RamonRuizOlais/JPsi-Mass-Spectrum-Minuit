@@ -12,6 +12,24 @@ pip install iminuit
 Minuit es una herramienta computacional en formato de módulo para Python 3, originalmente escrita en FORTRAN, que se utiliza para encontrar el mínimo de funciones multivariables y hacer análisis de la forma de la función alrededor de este punto, está intencionada para el análisis estadístico y cálculo de valores de parámetros.
 Según sea el caso de cada método estadístico hay que ser unos pequeños cambios
 
+Mínimos cuadrados:
+
+<pre><code>
+m = Minuit(fcn, norm=6000., mean=3.09, sigma=0.04, c0=200., c1=0.)
+m.migrad() #Se busca el mínimo
+m.minos() #Calculamos errores asimétricos
+m.print_param() #Imprimimos el resumen de parámetros
+</code></pre>
+
+Máxima verosimilitud:
+
+<pre><code>
+m = Minuit(fcn, norm=6000., mean=3.09, sigma=0.04, c0=200., c1=0.)
+m.migrad() #Se busca el mínimo
+m.minos() #Calculamos errores asimétricos
+m.print_param() #Imprimimos el resumen de parámetros
+</code></pre>
+
 Máxima verosimilitud extendida:
 
 <pre><code> 
