@@ -10,6 +10,9 @@ pip install iminuit
 </code></pre>
 
 Minuit es una herramienta computacional en formato de módulo para Python 3, originalmente escrita en FORTRAN, que se utiliza para encontrar el mínimo de funciones multivariables y hacer análisis de la forma de la función alrededor de este punto, está intencionada para el análisis estadístico y cálculo de valores de parámetros.
+Según sea el caso de cada método estadístico hay que ser unos pequeños cambios
+
+Máxima verosimilitud extendida:
 
 <pre><code> 
  from iminuit import Minuit
@@ -22,10 +25,12 @@ Minuit es una herramienta computacional en formato de módulo para Python 3, ori
 # Selección de datos y datos para el ajuste
 Para realizar un ajuste primero necesitamos obtener datos, los datos utilizados para este proyecto fueron obtenidos de un experimento que consistió en una colisión protón-protón en 2010. De aquí se obtuvieron los sets de datos "dimuon.npy" y "clean_data.npy". Es importante colocar los datos en la ubicación que abras con tu IDLE (en caso de que uses uno) y que los cargues a tu programa para poder trabajarlos.
 <pre><code>
+import numpy as np
 evt = np.load('dimuon.npy') #Se cargan los datos a trabajar (seleccionar "dimuon.npy" o "clean_data.npy")
 xmin, xmax, xbinwidth = 2.6, 3.6, 0.01 #Mantenemos los eventos entre 2.6 y 3.6
 vy,edges = np.histogram(evt, bins=100, range=(xmin,xmax)) #Eje Y y bordes de X
 vx = 0.5*(edges[1:]+edges[:-1]) #Eje X
 vyerr = vy**0.5 #Varianza estándar de Poisson
-</code></pre>  
+</code></pre>
+
 
