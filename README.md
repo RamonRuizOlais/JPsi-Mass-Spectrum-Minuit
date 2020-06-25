@@ -1,7 +1,9 @@
 # Espectro-de-masa-de-JPsi-Minuit
 
 La partícula J/Psi es un mesón de sabor neutro que consta de un quark encanto y un anti-quark encanto, particularmente famosa por conllevar varias confirmaciones teóricas importantes en su descubrimiento, entre ellas la existencia de un cuarto quark "encanto" y la idea de que los quarks vienen por pares, posteriormente gracias a esta partícula también se confirma la "libertad asintótica" que dice que la fuerza entre los quarks es mayor conforme su distancia aumenta, una característica muy particular de los quarks.
-Con los siguientes códigos vamos a calcular el espectro de masa de esta partícula a través de tres métodos estadísticos y el módulo Minuit. A continuación dejo una pequeña guía con notas sobre como cargar y utilizar bibliotecas y las correspondientes diferencias según cada método, se escribirá en el orden en que se acoplan los códigos.
+Con los siguientes códigos vamos a calcular el espectro de masa de esta partícula a través de tres métodos estadísticos y el módulo Minuit.
+A continuación dejo una pequeña guía con notas sobre como cargar y utilizar bibliotecas y las correspondientes diferencias según cada método, se escribirá en el orden en que se acoplan los códigos.
+De querer profundizar en el entendimiento del proceso que se lleva a cabo para realizar estos ajustes, dejo un pdf con un desarrollo más completo de los métodos matemáticos utilizados y su relación con la teoría física necesaria.
 
 # Bibliotecas
 Vamos a necesitar cargar numpy, iminuit y matplotlib. Las tres bibliotecas se pueden instalar a través de pip.
