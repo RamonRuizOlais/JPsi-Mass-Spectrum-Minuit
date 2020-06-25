@@ -20,13 +20,20 @@ iminuit:
 pip install iminuit
 </code></pre>
 
+Una vez instalados pueden ser fácilmente llamados de la siguiente forma:
+<pre><code>
+import numpy as np
+from iminuit import Minuit
+import matplotlib.pyplot as plt
+</code></pre>
+Nota: Para este trabajo solo necesitamos la función Minuit de la biblioteca iminuit, por eso solo se llamó a esta.
+
 # Función modelo y función núcleo
 La función modelo y núcleo sufriran pequeñas modificaciones según sea el caso del método estadístico con el que vayamos a trabajar.
 
 Mínimos cuadrados:
 
 <pre><code>
-import numpy as np
 def model(x, norm, mean, sigma, c0, c1): #Definimos la función para el ajuste de datos
  linear = c0 + c1*(x-xmin)/(xmax-xmin)
  gaussian = norm*xbinwidth/(2.*np.pi)**0.5/sigma * \
@@ -42,7 +49,6 @@ def fcn(norm, mean, sigma, c0, c1): #Definimos la función núcleo
 Máxima verosimilitud:
 
 <pre><code>
-import numpy as np
 def model(x, norm, mean, sigma, c1): #Definimos la función de verosimilitud
  linear = (1. + c1*x)/((xmax-xmin) + c1*(xmax**2-xmin**2)/2.) #Función para el background
  gaussian = 1./(2.*np.pi)**0.5/sigma * \
@@ -59,7 +65,6 @@ def fcn(norm, mean, sigma, c1): #Se le asigna una verosimilitud a cada evento
 Máxima verosimilitud extendida:
 
 <pre><code>
-import numpy as np
 def model(x, ns, nb, mean, sigma, c1): #Definimos la función de verosimilitud
  linear = (1. + c1*x)/((xmax-xmin) + c1*(xmax**2-xmin**2)/2.) #Función del background
  gaussian = 1./(2.*np.pi)**0.5/sigma * np.exp(-0.5*((x-mean)/sigma)**2) #Función de distribución
@@ -78,7 +83,6 @@ Mínimos cuadrados:
 Podemos trabajar con cualquier set de datos.
 
 <pre><code>
-import numpy as np
 evt = np.load('dimuon.npy') #Se cargan los datos a trabajar (seleccionar "dimuon.npy" o "clean_data.npy")
 xmin, xmax, xbinwidth = 2.6, 3.6, 0.01 #Mantenemos los eventos entre 2.6 y 3.6
 vy,edges = np.histogram(evt, bins=100, range=(xmin,xmax)) #Eje Y y bordes de X
@@ -90,7 +94,6 @@ Máxima verosimilitud y su versión extendida:
 Aquí la única distinción entre un método y otro son los datos a trabajar, el método de máxima verosimilitud solo puede trabajar el conjunto de datos "dimuon.npy", sin embargo su versión extendida puede trabajar con cualquiera de los dos, aunque se agregó específicamente para trabajar "clean_data.npy".
 
 <pre><code>
-import numpy as np
 evt = np.load('dimuon.npy') #Cargamos los datos a trabajar (Seleccionar según el método)
 evt = evt[abs(evt-3.1)<0.5] #Definimos la cantidad de eventos
 xmin, xmax, xbinwidth = 2.6, 3.6, 0.01 #Mantenemos los eventos entre 2.6 y 3.6
@@ -106,7 +109,6 @@ Según sea el caso de cada método estadístico hay que ser unos pequeños cambi
 Mínimos cuadrados:
 
 <pre><code>
-from iminuit import Minuit
 m = Minuit(fcn, norm=6000., mean=3.09, sigma=0.04, c0=200., c1=0.)
 m.migrad() #Se busca el mínimo
 m.minos() #Calculamos errores asimétricos
@@ -116,7 +118,6 @@ m.print_param() #Imprimimos el resumen de parámetros
 Máxima verosimilitud:
 
 <pre><code>
-from iminuit import Minuit
 m = Minuit(fcn, norm=6000., mean=3.09, sigma=0.04, c0=200., c1=0.)
 m.migrad() #Se busca el mínimo
 m.minos() #Calculamos errores asimétricos
@@ -126,7 +127,6 @@ m.print_param() #Imprimimos el resumen de parámetros
 Máxima verosimilitud extendida:
 
 <pre><code> 
- from iminuit import Minuit
  m = Minuit(fcn, ns=6000., nb=14000., mean=3.09, sigma=0.04, c1=0.)
  m.migrad() #Se busca el mínimo
  m.minos() #Calculamos errores asimétricos
@@ -139,7 +139,6 @@ No olvidemos que hay que graficar los ajustes que realizamos, de nuevo para cada
 Mínimos cuadrados:
 
 <pre><code>
-import matplotlib.pyplot as plt
 plt.plot([xmin,xmax],[0.,0.],c='black',lw=2)
 plt.errorbar(vx, vy, yerr = vyerr, fmt = '.')
 cx = np.linspace(xmin,xmax,500)
@@ -158,7 +157,6 @@ plt.show()
 Máxima verosimilitud:
 
 <pre><code>
-import matplotlib.pyplot as plt
 fig = plt.figure(figsize=(6,6), dpi=80)
 plt.plot([xmin,xmax],[0.,0.],c='black',lw=2)
 plt.errorbar(vx, vy, yerr = vyerr, fmt = '.')
@@ -178,7 +176,6 @@ plt.show()
 Máxima verosimilitud extendida:
 
 <pre><code>
-import matplotlib.pyplot as plt
 fig = plt.figure(figsize=(6,6), dpi=80)
 plt.plot([xmin,xmax],[0.,0.],c='black',lw=2)
 plt.errorbar(vx, vy, yerr = vyerr, fmt = '.')
