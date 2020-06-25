@@ -5,6 +5,7 @@ Con los siguientes códigos vamos a calcular el espectro de masa de esta partíc
 
 # Bibliotecas
 Vamos a necesitar cargar numpy, iminuit y matplotlib. Las tres bibliotecas se pueden instalar a través de pip.
+
 Numpy:
 <pre><code>
 pip install numpy
