@@ -68,3 +68,53 @@ vx = 0.5*(edges[1:]+edges[:-1]) #Eje x
 vyerr = vy**0.5 #Varianza estándar de Poisson
 </code></pre>
 
+# Función modelo y función núcleo
+La función modelo y núcleo sufriran pequeñas modificaciones según sea el caso del método estadístico con el que vayamos a trabajar.
+
+Mínimos cuadrados:
+
+<pre><code>
+import numpy as np
+def model(x, norm, mean, sigma, c0, c1): #Definimos la función para el ajuste de datos
+ linear = c0 + c1*(x-xmin)/(xmax-xmin)
+ gaussian = norm*xbinwidth/(2.*np.pi)**0.5/sigma * \
+ np.exp(-0.5*((x-mean)/sigma)**2)
+ return gaussian + linear
+
+def fcn(norm, mean, sigma, c0, c1): #Definimos la función núcleo
+ expt = model(vx, norm, mean, sigma, c0, c1)
+ delta = (vy-expt)/vyerr
+ return (delta[vy>0.]**2).sum()
+</code></pre>
+
+Máxima verosimilitud:
+
+<pre><code>
+import numpy as np
+def model(x, norm, mean, sigma, c1): #Definimos la función de verosimilitud
+ linear = (1. + c1*x)/((xmax-xmin) + c1*(xmax**2-xmin**2)/2.) #Función para el background
+ gaussian = 1./(2.*np.pi)**0.5/sigma * \
+ np.exp(-0.5*((x-mean)/sigma)**2) #Función de distribucion para los datos
+ fs = norm/len(evt)
+ return fs*gaussian + (1.-fs)*linear
+
+def fcn(norm, mean, sigma, c1): #Se le asigna una verosimilitud a cada evento
+ L = model(evt, norm, mean, sigma, c1)
+ if np.any(L<=0.): return 1E100
+ return -2.*np.log(L).sum()
+</code></pre>
+
+Máxima verosimilitud extendida:
+
+<pre><code>
+import numpy as np
+def model(x, ns, nb, mean, sigma, c1): #Definimos la función de verosimilitud
+ linear = (1. + c1*x)/((xmax-xmin) + c1*(xmax**2-xmin**2)/2.) #Función del background
+ gaussian = 1./(2.*np.pi)**0.5/sigma * np.exp(-0.5*((x-mean)/sigma)**2) #Función de distribución
+ return ns*gaussian + nb*linear  #La versión actualizada Li
+
+def fcn(ns, nb, mean, sigma, c1): #Se le asigna una verosimilitud a cada evento
+ L = model(evt, ns, nb, mean, sigma, c1)
+ if np.any(L<=0.): return 1E100
+ return 2.*(ns+nb)-2.*np.log(L).sum()
+</code></pre>
