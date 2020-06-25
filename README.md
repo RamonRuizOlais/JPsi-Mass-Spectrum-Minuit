@@ -15,6 +15,7 @@ Según sea el caso de cada método estadístico hay que ser unos pequeños cambi
 Mínimos cuadrados:
 
 <pre><code>
+from iminuit import Minuit
 m = Minuit(fcn, norm=6000., mean=3.09, sigma=0.04, c0=200., c1=0.)
 m.migrad() #Se busca el mínimo
 m.minos() #Calculamos errores asimétricos
@@ -24,6 +25,7 @@ m.print_param() #Imprimimos el resumen de parámetros
 Máxima verosimilitud:
 
 <pre><code>
+from iminuit import Minuit
 m = Minuit(fcn, norm=6000., mean=3.09, sigma=0.04, c0=200., c1=0.)
 m.migrad() #Se busca el mínimo
 m.minos() #Calculamos errores asimétricos
@@ -117,4 +119,66 @@ def fcn(ns, nb, mean, sigma, c1): #Se le asigna una verosimilitud a cada evento
  L = model(evt, ns, nb, mean, sigma, c1)
  if np.any(L<=0.): return 1E100
  return 2.*(ns+nb)-2.*np.log(L).sum()
+</code></pre>
+
+# Gráfica del ajuste
+No olvidemos que hay que graficar los ajustes que realizamos, de nuevo para cada método habrá una ligera modificación.
+
+Mínimos cuadrados:
+
+<pre><code>
+import matplotlib.pyplot as plt
+plt.plot([xmin,xmax],[0.,0.],c='black',lw=2)
+plt.errorbar(vx, vy, yerr = vyerr, fmt = '.')
+cx = np.linspace(xmin,xmax,500)
+cy = model(cx,m.values['norm'],m.values['mean'],
+ m.values['sigma'],m.values['c0'],m.values['c1'])
+cy_bkg = model(cx,0.,m.values['mean'],
+ m.values['sigma'],m.values['c0'],m.values['c1'])
+plt.plot(cx, cy, c='red',lw=2)
+plt.plot(cx, cy_bkg, c='red',lw=2,ls='--')
+plt.xlabel('GeV')
+plt.ylabel('Eventos/0.02GeV')
+plt.grid()
+plt.show()
+</code></pre>
+
+Máxima verosimilitud:
+
+<pre><code>
+import matplotlib.pyplot as plt
+fig = plt.figure(figsize=(6,6), dpi=80)
+plt.plot([xmin,xmax],[0.,0.],c='black',lw=2)
+plt.errorbar(vx, vy, yerr = vyerr, fmt = '.')
+cx = np.linspace(xmin,xmax,500)
+cy = model(cx,m.values['norm'],m.values['mean'],m.values['sigma'], #Normalizamos la función de verosimilitud a 1
+m.values['c1'])*xbinwidth*len(evt)                 #multiplicamos el número de eventos por el ancho de los bin
+cy_bkg = model(cx,0.,m.values['mean'],m.values['sigma'],
+m.values['c1'])*xbinwidth*(len(evt)-m.values['norm'])
+plt.plot(cx, cy, c='red',lw=2)
+plt.plot(cx, cy_bkg, c='red',lw=2,ls='--') 
+plt.xlabel('GeV')
+plt.ylabel('Eventos/0.02GeV')
+plt.grid()
+plt.show()
+</code></pre>
+
+Máxima verosimilitud extendida:
+
+<pre><code>
+import matplotlib.pyplot as plt
+fig = plt.figure(figsize=(6,6), dpi=80)
+plt.plot([xmin,xmax],[0.,0.],c='black',lw=2)
+plt.errorbar(vx, vy, yerr = vyerr, fmt = '.')
+cx = np.linspace(xmin,xmax,500)
+cy = model(cx,m.values['ns'],m.values['nb'],m.values['mean'], #Normalizamos la función de verosimilitud a 1
+ m.values['sigma'],m.values['c1'])*xbinwidth    #multiplicamos el número de eventos por el ancho de los bin
+cy_bkg = model(cx,0.,m.values['nb'],m.values['mean'],
+ m.values['sigma'],m.values['c1'])*xbinwidth
+plt.plot(cx, cy, c='red',lw=2)
+plt.plot(cx, cy_bkg, c='red',lw=2,ls='--')
+plt.xlabel('GeV')
+plt.ylabel('Eventos/0.02GeV')
+plt.grid()
+plt.show()
 </code></pre>
