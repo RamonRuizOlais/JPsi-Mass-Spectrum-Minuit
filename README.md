@@ -40,8 +40,12 @@ Máxima verosimilitud extendida:
  m.print_param() #Imprimimos el resumen de parámetros
 </code></pre>
 
-# Selección de datos y datos para el ajuste
-Para realizar un ajuste primero necesitamos obtener datos, los datos utilizados para este proyecto fueron obtenidos de un experimento que consistió en una colisión protón-protón en 2010. De aquí se obtuvieron los sets de datos "dimuon.npy" y "clean_data.npy". Es importante colocar los datos en la ubicación que abras con tu IDLE (en caso de que uses uno) y que los cargues a tu programa para poder trabajarlos.
+# Selección de datos
+Para realizar un ajuste primero necesitamos obtener datos, los datos utilizados para este proyecto fueron obtenidos de un experimento que consistió en una colisión protón-protón en 2010. De aquí se obtuvieron los sets de datos "dimuon.npy" y "clean_data.npy". Es importante colocar los datos en la ubicación que abras con tu IDLE (en caso de que uses uno) y que los cargues a tu programa para poder trabajarlos. Respecto al ajuste, es importante aclarar de nuevo que hay pequeñas modificaciones según cada método.
+
+Mínimos cuadrados:
+Podemos trabajar con cualquier set de datos.
+
 <pre><code>
 import numpy as np
 evt = np.load('dimuon.npy') #Se cargan los datos a trabajar (seleccionar "dimuon.npy" o "clean_data.npy")
@@ -51,4 +55,16 @@ vx = 0.5*(edges[1:]+edges[:-1]) #Eje X
 vyerr = vy**0.5 #Varianza estándar de Poisson
 </code></pre>
 
+Máxima verosimilitud y su versión extendida:
+Aquí la única distinción entre un método y otro son los datos a trabajar, el método de máxima verosimilitud solo puede trabajar el conjunto de datos "dimuon.npy", sin embargo su versión extendida puede trabajar con cualquiera de los dos, aunque se agregó específicamente para trabajar "clean_data.npy".
+
+<pre><code>
+import numpy as np
+evt = np.load('dimuon.npy') #Cargamos los datos a trabajar (Seleccionar según el método)
+evt = evt[abs(evt-3.1)<0.5] #Definimos la cantidad de eventos
+xmin, xmax, xbinwidth = 2.6, 3.6, 0.01 #Mantenemos los eventos entre 2.6 y 3.6
+vy,edges = np.histogram(evt, bins=100, range=(xmin,xmax)) #Eje y y bordes de x
+vx = 0.5*(edges[1:]+edges[:-1]) #Eje x
+vyerr = vy**0.5 #Varianza estándar de Poisson
+</code></pre>
 
