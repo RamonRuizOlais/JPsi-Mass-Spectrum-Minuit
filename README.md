@@ -1,9 +1,11 @@
 # Espectro-de-masa-de-JPsi-Minuit
-
+//ES
 La partícula J/Psi es un mesón de sabor neutro que consta de un quark encanto y un anti-quark encanto, particularmente famosa por conllevar varias confirmaciones teóricas importantes en su descubrimiento, entre ellas la existencia de un cuarto quark "encanto" y la idea de que los quarks vienen por pares, posteriormente gracias a esta partícula también se confirma la "libertad asintótica" que dice que la fuerza entre los quarks es mayor conforme su distancia aumenta, una característica muy particular de los quarks.
 Con los siguientes códigos vamos a calcular el espectro de masa de esta partícula a través de tres métodos estadísticos y el módulo Minuit.
 A continuación dejo una pequeña guía con notas sobre como cargar y utilizar bibliotecas y las correspondientes diferencias según cada método, se escribirá en el orden en que se acoplan los códigos.
 De querer profundizar en el entendimiento del proceso que se lleva a cabo para realizar estos ajustes, dejo un PDF con un desarrollo más completo de los métodos matemáticos utilizados y su relación con la teoría física necesaria.
+//EN
+The J/Psi particle is a flavor-neutral meson consisting of a charm quark and an anti-charm quark, particularly famous for leading to several important theoretical confirmations in its discovery, including the existence of a fourth "charm" quark and the idea that quarks come in pairs, later, thanks to this particle, the "asymptotic freedom" is also confirmed, which says that the force between quarks is greater as their distance increases, a very particular characteristic of quarks. With the following codes we are going to calculate the mass spectrum of this particle through three statistical methods and the Minuit module. Below I leave a small guide with notes on how to load and use libraries and the corresponding differences according to each method, it will be written in the order in which the codes are attached. If you want to deepen the understanding of the process that is carried out to make these adjustments, I leave a PDF with a more complete development of the mathematical methods used and their relationship with the necessary physical theory.
 
 # Bibliotecas
 Vamos a necesitar cargar numpy, iminuit y matplotlib. Las tres bibliotecas se pueden instalar a través de pip.
