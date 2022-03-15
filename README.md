@@ -1,4 +1,4 @@
-# Espectro-de-masa-de-JPsi-Minuit/JPsi-Mass-Specter-Minuit
+# Espectro-de-masa-de-JPsi-Minuit/JPsi-Mass-Spectrum-Minuit
 Español:
 
 La partícula J/Psi es un mesón de sabor neutro que consta de un quark encanto y un anti-quark encanto, particularmente famosa por conllevar varias confirmaciones teóricas importantes en su descubrimiento, entre ellas la existencia de un cuarto quark "encanto" y la idea de que los quarks vienen por pares, posteriormente gracias a esta partícula también se confirma la "libertad asintótica" que dice que la fuerza entre los quarks es mayor conforme su distancia aumenta, una característica muy particular de los quarks.
