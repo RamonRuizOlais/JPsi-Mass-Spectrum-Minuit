@@ -1,14 +1,23 @@
-# Espectro-de-masa-de-JPsi-Minuit
-//ES
+# Espectro-de-masa-de-JPsi-Minuit/JPsi-Mass-Specter-Minuit
+Español:
+
 La partícula J/Psi es un mesón de sabor neutro que consta de un quark encanto y un anti-quark encanto, particularmente famosa por conllevar varias confirmaciones teóricas importantes en su descubrimiento, entre ellas la existencia de un cuarto quark "encanto" y la idea de que los quarks vienen por pares, posteriormente gracias a esta partícula también se confirma la "libertad asintótica" que dice que la fuerza entre los quarks es mayor conforme su distancia aumenta, una característica muy particular de los quarks.
 Con los siguientes códigos vamos a calcular el espectro de masa de esta partícula a través de tres métodos estadísticos y el módulo Minuit.
 A continuación dejo una pequeña guía con notas sobre como cargar y utilizar bibliotecas y las correspondientes diferencias según cada método, se escribirá en el orden en que se acoplan los códigos.
 De querer profundizar en el entendimiento del proceso que se lleva a cabo para realizar estos ajustes, dejo un PDF con un desarrollo más completo de los métodos matemáticos utilizados y su relación con la teoría física necesaria.
-//EN
+
+English:
+
 The J/Psi particle is a flavor-neutral meson consisting of a charm quark and an anti-charm quark, particularly famous for leading to several important theoretical confirmations in its discovery, including the existence of a fourth "charm" quark and the idea that quarks come in pairs, later, thanks to this particle, the "asymptotic freedom" is also confirmed, which says that the force between quarks is greater as their distance increases, a very particular characteristic of quarks. With the following codes we are going to calculate the mass spectrum of this particle through three statistical methods and the Minuit module. Below I leave a small guide with notes on how to load and use libraries and the corresponding differences according to each method, it will be written in the order in which the codes are attached. If you want to deepen the understanding of the process that is carried out to make these adjustments, I leave a PDF with a more complete development of the mathematical methods used and their relationship with the necessary physical theory.
 
-# Bibliotecas
+# Bibliotecas/Libraries
+Español:
+
 Vamos a necesitar cargar numpy, iminuit y matplotlib. Las tres bibliotecas se pueden instalar a través de pip.
+
+English:
+
+We will need to load numpy, iminuit and matplotlib. The three libraries can be installed through pip.
 
 Numpy:
 <pre><code>
@@ -24,19 +33,30 @@ iminuit:
 <pre><code>
 pip install iminuit
 </code></pre>
+Español:
 
 Una vez instalados pueden ser fácilmente llamados de la siguiente forma:
+
+English:
+
+Once installed, it can be called by the next way:
 <pre><code>
 import numpy as np
 from iminuit import Minuit
 import matplotlib.pyplot as plt
 </code></pre>
 Nota: Para este trabajo solo necesitamos la función Minuit de la biblioteca iminuit, por eso solo se llamó a esta.
+Note: For this job we will just need the function Minuit from the library imunuit, that's why I just called this one.
 
-# Función modelo y función núcleo
+# Función modelo y función núcleo/Model function and core function
+Español:
+
 La función modelo y núcleo sufriran pequeñas modificaciones según sea el caso del método estadístico con el que vayamos a trabajar.
 
-Mínimos cuadrados:
+English:
+Model function and core function will undergo minor modifications depending on the statistical method that we are going to apply.
+
+Mínimos cuadrados/Least square:
 
 <pre><code>
 def model(x, norm, mean, sigma, c0, c1): #Definimos la función para el ajuste de datos
@@ -51,7 +71,7 @@ def fcn(norm, mean, sigma, c0, c1): #Definimos la función núcleo
  return (delta[vy>0.]**2).sum()
 </code></pre>
 
-Máxima verosimilitud:
+Máxima verosimilitud/Maximum likelihood:
 
 <pre><code>
 def model(x, norm, mean, sigma, c1): #Definimos la función de verosimilitud
@@ -67,7 +87,7 @@ def fcn(norm, mean, sigma, c1): #Se le asigna una verosimilitud a cada evento
  return -2.*np.log(L).sum()
 </code></pre>
 
-Máxima verosimilitud extendida:
+Máxima verosimilitud extendida/Extended maximum likelihood:
 
 <pre><code>
 def model(x, ns, nb, mean, sigma, c1): #Definimos la función de verosimilitud
@@ -81,11 +101,22 @@ def fcn(ns, nb, mean, sigma, c1): #Se le asigna una verosimilitud a cada evento
  return 2.*(ns+nb)-2.*np.log(L).sum()
 </code></pre>
 
-# Selección de datos
+# Selección de datos/Data selection
+Español:
+
 Para realizar un ajuste primero necesitamos obtener datos, los datos utilizados para este proyecto fueron obtenidos de un experimento que consistió en una colisión protón-protón en 2010. De aquí se obtuvieron los sets de datos "dimuon.npy" y "clean_data.npy". Es importante colocar los datos en la ubicación que abras con tu IDLE (en caso de que uses uno) y que los cargues a tu programa para poder trabajarlos. Respecto al ajuste, es importante aclarar de nuevo que hay pequeñas modificaciones según cada método.
 
+English:
+
+To perform an adjustment we first need to obtain data, the data used for this project was obtained from an experiment that consisted of a proton-proton collision in 2010. From here the data sets "dimuon.npy" and "clean_data.npy" were obtained . It is important to put the data in the location that you open with your IDLE (in case you use one) and that you load it to your program to be able to work with it. Regarding the adjustment, it is important to clarify again that there are small modifications according to each method.
+
 Mínimos cuadrados:
+
 Podemos trabajar con cualquier set de datos.
+
+Least square:
+
+We can work with any dataset.
 
 <pre><code>
 evt = np.load('dimuon.npy') #Se cargan los datos a trabajar (seleccionar "dimuon.npy" o "clean_data.npy")
@@ -98,6 +129,9 @@ vyerr = vy**0.5 #Varianza estándar de Poisson
 Máxima verosimilitud y su versión extendida:
 Aquí la única distinción entre un método y otro son los datos a trabajar, el método de máxima verosimilitud solo puede trabajar el conjunto de datos "dimuon.npy", sin embargo su versión extendida puede trabajar con cualquiera de los dos, aunque se agregó específicamente para trabajar "clean_data.npy".
 
+Maximum likelihood and its extended version:
+Here the only distinction between one method and another is the data to work with, the maximum likelihood method can only work with the "dimuon.npy" dataset, however its extended version can work with either of the two, although it was specifically added to work "clean_data.npy".
+
 <pre><code>
 evt = np.load('dimuon.npy') #Cargamos los datos a trabajar (Seleccionar según el método)
 evt = evt[abs(evt-3.1)<0.5] #Definimos la cantidad de eventos
@@ -108,10 +142,17 @@ vyerr = vy**0.5 #Varianza estándar de Poisson
 </code></pre>
 
 # Minuit
+Español:
+
 Minuit es una herramienta computacional en formato de módulo para Python 3, originalmente escrita en FORTRAN, que se utiliza para encontrar el mínimo de funciones multivariables y hacer análisis de la forma de la función alrededor de este punto, está intencionada para el análisis estadístico y cálculo de valores de parámetros.
 Según sea el caso de cada método estadístico hay que ser unos pequeños cambios
 
-Mínimos cuadrados:
+English:
+
+Minuit is a computational tool in module format for Python 3, originally written in FORTRAN, used to find the minimum of multivariable functions and do analysis of the function's shape around this point, it is intended for statistical analysis and calculus. of parameter values.
+Depending on the case of each statistical method, there must be a few small changes
+
+Mínimos cuadrados/Least square:
 
 <pre><code>
 m = Minuit(fcn, norm=6000., mean=3.09, sigma=0.04, c0=200., c1=0.)
@@ -120,7 +161,7 @@ m.minos() #Calculamos errores asimétricos
 m.print_param() #Imprimimos el resumen de parámetros
 </code></pre>
 
-Máxima verosimilitud:
+Máxima verosimilitud/Maximum likelihood:
 
 <pre><code>
 m = Minuit(fcn, norm=6000., mean=3.09, sigma=0.04, c0=200., c1=0.)
@@ -129,7 +170,7 @@ m.minos() #Calculamos errores asimétricos
 m.print_param() #Imprimimos el resumen de parámetros
 </code></pre>
 
-Máxima verosimilitud extendida:
+Máxima verosimilitud extendida/Extended maximum likelihood:
 
 <pre><code> 
  m = Minuit(fcn, ns=6000., nb=14000., mean=3.09, sigma=0.04, c1=0.)
@@ -138,10 +179,16 @@ Máxima verosimilitud extendida:
  m.print_param() #Imprimimos el resumen de parámetros
  </code></pre>
 
-# Gráfica del ajuste
+# Gráfica del ajuste/Fit graph
+Español:
+
 No olvidemos que hay que graficar los ajustes que realizamos, de nuevo para cada método habrá una ligera modificación.
 
-Mínimos cuadrados:
+English:
+
+Don't forget that we need to make a plot of the fit that we just realized.
+
+Mínimos cuadrados/Least square:
 
 <pre><code>
 plt.plot([xmin,xmax],[0.,0.],c='black',lw=2)
@@ -159,7 +206,7 @@ plt.grid()
 plt.show()
 </code></pre>
 
-Máxima verosimilitud:
+Máxima verosimilitud/Maximum likelihood:
 
 <pre><code>
 fig = plt.figure(figsize=(6,6), dpi=80)
@@ -178,7 +225,7 @@ plt.grid()
 plt.show()
 </code></pre>
 
-Máxima verosimilitud extendida:
+Máxima verosimilitud extendida/Extended maximum likelihood:
 
 <pre><code>
 fig = plt.figure(figsize=(6,6), dpi=80)
